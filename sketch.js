@@ -1,12 +1,29 @@
+let sunHeight;
+let horizon = 600;
+
+
 function setup() {
-    createCanvas(1600, 800);
-    background(255, 201, 34);  
+  createCanvas(1600, 800);
+  background('lightblue');
 }
+function draw() {   
+    //sun follows y-coordinate of mouse
+    sunHeight = mouseY;
 
-function draw() {
+    if (sunHeight < horizon) {
+        background("lightblue"); // blue sky if above horizon
+    } else {
+        background(0); // night sky otherwise
+    }
 
-    circle(800, 200, 200);
-    fill(255, 255, 0);
+    //sun
+    fill("yellow");
+    circle(700, sunHeight, 100);
+
+
+    // draw line for horizon
+    stroke('green');
+    line(0,horizon,400,horizon);
 
     fill(110, 100, 40);
     triangle(500, 800,900, 400, 0, 800);
@@ -32,4 +49,5 @@ function draw() {
     triangle(800, 800, 1200, 400, 1600, 800);
     fill(120, 80, 50);
     triangle(1400, 800, 1200, 400, 2000, 800);
-}
+};
+
