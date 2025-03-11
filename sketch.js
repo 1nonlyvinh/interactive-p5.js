@@ -1,25 +1,28 @@
 let sunHeight;
 let horizon = 600;
 let circles = [];
-let circleSize = 40; 
-let circleColor; 
+let shapes = []; 
+
 
 function setup() {
   createCanvas(1600, 800);
-  background('lightblue');
-  circleColor = color(0,100,255);
-
 }
+
 function draw() {   
-    background(220);
+    background('black');
     sunHeight = mouseY;
 
-    if (sunHeight < horizon) {
-        background("lightblue"); // blue sky if above horizon
-    } else {
-        background(0); // night sky otherwise
+    if(sunHeight < horizon){
+        background("lightblue");
     }
 
+  for (let i = shapes.length - 1; i >- 0; i--) {
+        shapes[i].update();
+        shapes[i].display();
+    if (shapes[i].y > height + 50) {
+        shapes.splice(i, 1);
+    }
+}
     //sun
     fill("yellow");
     circle(700, sunHeight, 100);
@@ -54,13 +57,10 @@ function draw() {
     fill(120, 80, 50);
     triangle(1400, 800, 1200, 400, 2000, 800);
 
-    for (let circle of circles) {
-        circle.display();
-    }
 };
 
 function mousePressed() {
-    createCircle(mouseX, mouseY);
+    shapes.push(new Shape(mouseX, mouseY));
 }
 
 function createCircle(x, y) {
@@ -73,9 +73,37 @@ class Circle {
         this.y = y;
     }
 
-    display() {
+    output() {
         fill(circleColor);
         noStroke();
         ellipse(this.x, this.y, circleSize);
+    }
+}
+
+
+class Shape {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = random(20,50);
+        this.speed = 0;
+        this.gravity = 0.5 
+        this.shapeType = random ([0,1])
+        this.color = color(random(255), random(255), random(255));
+    }
+
+    update() {
+        this.speed += this.gravity; 
+        this.y += this.speed; 
+    }
+
+    display() {
+        fill(this.color);
+        noStroke();
+        if (this.shapeType === 0) {
+            ellipse(this.x, this.y, this.size);
+        } else {
+            rect(this.x - this.size / 2, this.y - this.size / 2, this.size, this.size)
+        }
     }
 }
