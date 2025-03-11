@@ -1,13 +1,17 @@
 let sunHeight;
 let horizon = 600;
-
+let circles = [];
+let circleSize = 40; 
+let circleColor; 
 
 function setup() {
   createCanvas(1600, 800);
   background('lightblue');
+  circleColor = color(0,100,255);
+
 }
 function draw() {   
-    //sun follows y-coordinate of mouse
+    background(220);
     sunHeight = mouseY;
 
     if (sunHeight < horizon) {
@@ -49,5 +53,29 @@ function draw() {
     triangle(800, 800, 1200, 400, 1600, 800);
     fill(120, 80, 50);
     triangle(1400, 800, 1200, 400, 2000, 800);
+
+    for (let circle of circles) {
+        circle.display();
+    }
 };
 
+function mousePressed() {
+    createCircle(mouseX, mouseY);
+}
+
+function createCircle(x, y) {
+    circles.push(new Circle(x,y)); 
+}
+
+class Circle {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    display() {
+        fill(circleColor);
+        noStroke();
+        ellipse(this.x, this.y, circleSize);
+    }
+}
