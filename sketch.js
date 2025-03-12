@@ -9,7 +9,6 @@ let button; // change background color when sun is below horizon line
 function setup() { // setup canvas, creates button 2 change background color
   createCanvas(1600, 800);
   button = createButton('Change Background');
-
   button.position(20, 20);
   button.mousePressed(changeBackground);
   bgColor = ('black');
@@ -74,6 +73,9 @@ function draw() { // a lot of stuff
 
 function mousePressed() { // function when click, creates shape
     shapes.push(new Shape(mouseX, mouseY));
+    if(isCircleClicked(mouseX, mouseY)) {
+        growCircle()
+    }
 }
 
 function createCircle(x, y) { // creates shape and pushes it to array
